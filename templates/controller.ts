@@ -13,12 +13,12 @@ export = {
     list: function (req, res) {
         {modelName}.find(function (err, {pluralName}) {
             if (err) {
-                return res.status(500).json({
+                return res.sendError({
                     message: 'Error when getting {name}.',
                     error: err
                 });
             }
-            return res.json({pluralName});
+            return res.sendOk({pluralName});
         });
     },
 
@@ -29,17 +29,17 @@ export = {
         const id = req.params.id;
         {modelName}.findOne({_id: id}, function (err, {name}) {
             if (err) {
-                return res.status(500).json({
+                return res.sendError({
                     message: 'Error when getting {name}.',
                     error: err
                 });
             }
             if (!{name}) {
-                return res.status(404).json({
+                return res.sendNotFound({
                     message: 'No such {name}'
                 });
             }
-            return res.json({name});
+            return res.sendOk({name});
         });
     },
 
@@ -52,12 +52,12 @@ export = {
 
         {name}.save(function (err, {name}) {
             if (err) {
-                return res.status(500).json({
+                return res.sendError({
                     message: 'Error when creating {name}',
                     error: err
                 });
             }
-            return res.status(201).json({name});
+            return res.sendOk({name});
         });
     },
 
@@ -68,13 +68,13 @@ export = {
         const id = req.params.id;
         {modelName}.findOne({_id: id}, function (err, {name}) {
             if (err) {
-                return res.status(500).json({
+                return res.sendError({
                     message: 'Error when getting {name}',
                     error: err
                 });
             }
             if (!{name}) {
-                return res.status(404).json({
+                return res.sendNotFound({
                     message: 'No such {name}'
                 });
             }
@@ -82,13 +82,13 @@ export = {
             {updateFields}
             {name}.save(function (err, {name}) {
                 if (err) {
-                    return res.status(500).json({
+                    return res.sendError({
                         message: 'Error when updating {name}.',
                         error: err
                     });
                 }
 
-                return res.json({name});
+                return res.sendOk({name});
             });
         });
     },
@@ -100,12 +100,12 @@ export = {
         const id = req.params.id;
         {modelName}.findByIdAndRemove(id, function (err, {name}) {
             if (err) {
-                return res.status(500).json({
+                return res.sendError({
                     message: 'Error when deleting the {name}.',
                     error: err
                 });
             }
-            return res.status(204).json();
+            return res.sendOk();
         });
     }
 };
